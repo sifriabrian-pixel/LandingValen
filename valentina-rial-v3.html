@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valentina Rial — Diseño Gráfico</title>
+  <meta name="description" content="Diseñadora gráfica freelance. Branding, identidad visual, contenido para redes y piezas editoriales que hacen que tu marca se recuerde." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─────────────────────────────────────
+       TOKENS
+    ───────────────────────────────────── */
+    :root {
+      --red:    #EB4213;
+      --pink:   #FF99DC;
+      --green:  #D8F382;
+      --purple: #826DEE;
+      --black:  #0D0D0D;
+      --white:  #FAFAFA;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'Space Grotesk', sans-serif;
+    }
+
+    /* ─────────────────────────────────────
+       RESET
+    ───────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+      cursor: none;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ─────────────────────────────────────
+       CUSTOM CURSOR
+    ───────────────────────────────────── */
+    .cursor {
+      position: fixed;
+      width: 12px; height: 12px;
+      background: var(--red);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width .2s, height .2s, background .2s;
+      mix-blend-mode: multiply;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--red);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform .08s ease, width .25s, height .25s, opacity .25s;
+      opacity: 0.6;
+    }
+    body:hover .cursor { opacity: 1; }
+
+    /* ─────────────────────────────────────
+       UTILITY
+    ───────────────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(1.25rem, 5vw, 3rem);
+    }
+
+    /* Hand-drawn underline SVG used via background-image */
+    .underline-red {
+      position: relative;
+      display: inline;
+    }
+    .underline-red::after {
+      content: '';
+      position: absolute;
+      left: -2px; right: -2px;
+      bottom: -6px;
+      height: 10px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12'%3E%3Cpath d='M2 8 Q50 2 100 7 Q150 12 198 5' stroke='%23EB4213' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/100% 100%;
+    }
+    .underline-green {
+      position: relative;
+      display: inline;
+    }
+    .underline-green::after {
+      content: '';
+      position: absolute;
+      left: -2px; right: -2px;
+      bottom: -6px;
+      height: 10px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12'%3E%3Cpath d='M2 9 Q60 3 100 8 Q140 13 198 4' stroke='%23D8F382' stroke-width='3.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/100% 100%;
+    }
+
+    /* Arrow SVG deco */
+    .arrow-deco {
+      display: inline-block;
+      width: 48px;
+      height: 48px;
+    }
+
+    /* Tags/pills */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-family: var(--font-body);
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .4em 1em;
+      border-radius: 100px;
+      border: 1.5px solid currentColor;
+    }
+    .pill-red   { color: var(--red);    background: transparent; }
+    .pill-purple{ color: var(--purple); background: transparent; }
+    .pill-green { color: var(--black);  background: var(--green); border-color: var(--green); }
+
+    /* Asterisk decorativo (de la paleta de inspiración) */
+    .ast {
+      display: inline-block;
+      font-size: 1.2em;
+      line-height: 1;
+      color: var(--red);
+      animation: spin 8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─────────────────────────────────────
+       NAV
+    ───────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 0;
+      transition: background .3s;
+      mix-blend-mode: normal;
+    }
+    nav.scrolled {
+      background: rgba(250,250,250,.9);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0,0,0,.06);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    /* Logo SVG generado */
+    .nav-logo-svg { width: 48px; height: 48px; }
+    .nav-links {
+      display: flex; align-items: center; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      font-size: .78rem; font-weight: 500; letter-spacing: .04em;
+      color: var(--black); transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--red); }
+    .nav-btn {
+      background: var(--black); color: var(--white);
+      font-family: var(--font-body); font-size: .75rem; font-weight: 600;
+      letter-spacing: .06em; padding: .7em 1.6em;
+      border-radius: 100px; transition: background .25s, transform .2s;
+      border: none; cursor: pointer;
+    }
+    .nav-btn:hover { background: var(--red); transform: translateY(-2px); }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px; background: var(--black); transition: all .3s;
+    }
+
+    /* ─────────────────────────────────────
+       BACKGROUND SHAPES (fondo decorativo)
+    ───────────────────────────────────── */
+    .bg-shapes {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .shape {
+      position: absolute; opacity: .06;
+    }
+    .shape-circle-1 {
+      width: 500px; height: 500px; border-radius: 50%;
+      background: var(--purple);
+      top: -120px; right: -100px;
+      animation: floatA 12s ease-in-out infinite;
+    }
+    .shape-circle-2 {
+      width: 300px; height: 300px; border-radius: 50%;
+      background: var(--red);
+      bottom: 10%; left: -80px;
+      animation: floatB 14s ease-in-out infinite;
+    }
+    .shape-star-big {
+      font-size: 280px; line-height: 1; color: var(--green);
+      top: 40%; right: 5%; opacity: .04;
+      animation: spinSlow 30s linear infinite;
+    }
+    @keyframes floatA { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-30px,20px)} }
+    @keyframes floatB { 0%,100%{transform:translate(0,0)} 50%{transform:translate(20px,-25px)} }
+    @keyframes spinSlow { to { transform: rotate(360deg); } }
+
+    /* ─────────────────────────────────────
+       HERO
+    ───────────────────────────────────── */
+    .hero {
+      min-height: 100svh;
+      padding: 8rem 0 5rem;
+      position: relative; z-index: 1;
+      display: flex; align-items: center;
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 3rem; align-items: center;
+    }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: .75rem;
+      margin-bottom: 1.8rem;
+      animation: fadeUp .6s ease both .1s;
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .eyebrow-line { display: block; width: 28px; height: 2px; background: var(--red); }
+    .eyebrow-text { font-size: .68rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: var(--red); }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 7vw, 6.5rem);
+      font-weight: 900;
+      line-height: .95;
+      color: var(--black);
+      margin-bottom: 1.8rem;
+      animation: fadeUp .6s ease both .2s;
+    }
+    .hero-title .line-italic {
+      display: block; font-style: italic; font-weight: 400;
+      color: var(--red);
+    }
+    .hero-title .line-outline {
+      display: block;
+      -webkit-text-stroke: 2px var(--black);
+      color: transparent;
+    }
+
+    /* SVG arrow curva debajo del título */
+    .hero-arrow {
+      display: block; margin: 1rem 0 1.5rem;
+      animation: fadeUp .6s ease both .35s;
+    }
+
+    .hero-sub {
+      font-size: .9rem; font-weight: 300; line-height: 1.8;
+      color: #444; max-width: 420px;
+      margin-bottom: 2.5rem;
+      animation: fadeUp .6s ease both .45s;
+    }
+    .hero-actions {
+      display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+      animation: fadeUp .6s ease both .55s;
+    }
+    .btn-wa {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--red); color: var(--white);
+      font-family: var(--font-body); font-size: .8rem; font-weight: 600;
+      letter-spacing: .04em; padding: .9em 2em; border-radius: 100px;
+      transition: transform .2s, background .25s;
+    }
+    .btn-wa:hover { background: #c93209; transform: translateY(-3px) rotate(-1deg); }
+    .btn-wa svg { width: 18px; height: 18px; fill: currentColor; }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .8rem; font-weight: 500;
+      color: var(--black); border-bottom: 2px solid var(--black);
+      padding-bottom: 2px; transition: color .2s, border-color .2s;
+    }
+    .btn-ghost:hover { color: var(--purple); border-color: var(--purple); }
+
+    /* Hero visual: collage de 3 imágenes + badge flotante */
+    .hero-visual {
+      position: relative;
+    }
+    .hero-img-main {
+      width: 100%; aspect-ratio: 3/4;
+      border-radius: 24px 24px 120px 24px;
+      overflow: hidden;
+      background: #e8e0d8;
+      animation: fadeUp .8s ease both .3s;
+    }
+    .hero-img-main img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .6s ease;
+    }
+    .hero-img-main:hover img { transform: scale(1.04); }
+    .hero-badge {
+      position: absolute; bottom: -1.5rem; left: -2rem;
+      background: var(--green); color: var(--black);
+      border-radius: 16px; padding: 1.1rem 1.4rem;
+      font-weight: 700; font-size: .8rem; line-height: 1.3;
+      box-shadow: 4px 4px 0 var(--black);
+      animation: fadeUp .7s ease both .7s;
+    }
+    .hero-badge strong {
+      display: block; font-family: var(--font-display);
+      font-size: 2.2rem; font-weight: 900; line-height: 1;
+    }
+    .hero-floating-pill {
+      position: absolute; top: 1.2rem; right: -1.2rem;
+      background: var(--purple); color: var(--white);
+      border-radius: 100px; padding: .7rem 1.2rem;
+      font-size: .7rem; font-weight: 600; white-space: nowrap;
+      box-shadow: 3px 3px 0 var(--black);
+      animation: fadeUp .7s ease both .8s;
+    }
+    /* Asterisco flotante rojo */
+    .hero-ast-deco {
+      position: absolute; bottom: 2rem; right: -1rem;
+      font-size: 3rem; color: var(--red);
+      animation: spin 6s linear infinite;
+      line-height: 1;
+    }
+
+    /* ─────────────────────────────────────
+       MARQUEE STRIP
+    ───────────────────────────────────── */
+    .strip {
+      padding: .85rem 0;
+      background: var(--black);
+      overflow: hidden;
+    }
+    .strip-inner {
+      display: flex; align-items: center; gap: 2rem;
+      animation: marquee 18s linear infinite;
+      width: max-content; white-space: nowrap;
+    }
+    .strip-inner span {
+      font-size: .72rem; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--white);
+    }
+    .strip-inner .sdot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--pink); flex-shrink: 0; display: inline-block;
+    }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ─────────────────────────────────────
+       SERVICES
+    ───────────────────────────────────── */
+    .services { padding: clamp(5rem,10vw,9rem) 0; position: relative; z-index: 1; }
+
+    .section-kicker {
+      display: flex; align-items: center; gap: .75rem; margin-bottom: 1rem;
+    }
+    .kicker-line { width: 32px; height: 2px; background: var(--red); }
+    .kicker-text {
+      font-size: .65rem; font-weight: 700; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--red);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 4.5vw, 4rem);
+      font-weight: 900; line-height: 1; color: var(--black);
+      margin-bottom: .5rem;
+    }
+    .section-title em { font-style: italic; color: var(--red); }
+
+    .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3.5rem; gap: 1rem; flex-wrap: wrap; }
+    .services-sub { font-size: .82rem; font-weight: 300; color: #555; max-width: 260px; text-align: right; line-height: 1.7; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--black);
+      border: 1.5px solid var(--black);
+      border-radius: 20px; overflow: hidden;
+    }
+    .svc-card {
+      background: var(--white);
+      padding: clamp(1.5rem,3vw,2.5rem);
+      position: relative; overflow: hidden;
+      transition: background .3s;
+      cursor: default;
+    }
+    .svc-card:hover { background: var(--green); }
+    .svc-card:nth-child(2):hover { background: var(--pink); }
+    .svc-card:nth-child(4):hover { background: var(--purple); color: var(--white); }
+    .svc-card:nth-child(4):hover .svc-name,
+    .svc-card:nth-child(4):hover .svc-desc { color: var(--white); }
+    .svc-card:nth-child(5):hover { background: var(--red); color: var(--white); }
+    .svc-card:nth-child(5):hover .svc-name,
+    .svc-card:nth-child(5):hover .svc-desc { color: var(--white); }
+    .svc-num {
+      position: absolute; top: 1.25rem; right: 1.5rem;
+      font-family: var(--font-display); font-size: 4rem; font-weight: 900;
+      line-height: 1; color: rgba(0,0,0,.06); pointer-events: none;
+      transition: color .3s;
+    }
+    .svc-card:hover .svc-num { color: rgba(0,0,0,.1); }
+    .svc-icon-wrap {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: var(--black); display: flex; align-items: center;
+      justify-content: center; margin-bottom: 1.5rem;
+      transition: background .3s;
+    }
+    .svc-card:hover .svc-icon-wrap { background: rgba(0,0,0,.15); }
+    .svc-card:nth-child(4):hover .svc-icon-wrap,
+    .svc-card:nth-child(5):hover .svc-icon-wrap { background: rgba(255,255,255,.2); }
+    .svc-icon-wrap svg {
+      width: 22px; height: 22px; stroke: var(--white);
+      fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .svc-name {
+      font-family: var(--font-display); font-size: 1.3rem; font-weight: 700;
+      color: var(--black); margin-bottom: .5rem; transition: color .3s;
+    }
+    .svc-desc { font-size: .78rem; font-weight: 300; line-height: 1.8; color: #555; transition: color .3s; }
+
+    /* ─────────────────────────────────────
+       PORTFOLIO
+    ───────────────────────────────────── */
+    .portfolio { padding: clamp(4rem,8vw,8rem) 0; background: var(--black); position: relative; z-index: 1; }
+    .portfolio .section-title { color: var(--white); }
+    .portfolio .kicker-text { color: var(--green); }
+    .portfolio .kicker-line { background: var(--green); }
+    .portfolio .services-sub { color: rgba(255,255,255,.5); }
+    .portfolio .services-header { margin-bottom: 2.5rem; }
+
+    .p-grid {
+      display: grid;
+      grid-template-columns: repeat(12,1fr);
+      gap: 1rem;
+    }
+    .p-item {
+      position: relative; overflow: hidden; border-radius: 16px;
+      background: #1a1a1a; cursor: pointer;
+    }
+    .p-item:nth-child(1)  { grid-column: span 5; }
+    .p-item:nth-child(2)  { grid-column: span 7; }
+    .p-item:nth-child(3)  { grid-column: span 4; }
+    .p-item:nth-child(4)  { grid-column: span 4; }
+    .p-item:nth-child(5)  { grid-column: span 4; }
+    .p-item:nth-child(6)  { grid-column: span 7; }
+    .p-item:nth-child(7)  { grid-column: span 5; }
+    .p-item:nth-child(8)  { grid-column: span 4; }
+    .p-item:nth-child(9)  { grid-column: span 4; }
+    .p-item:nth-child(10) { grid-column: span 4; }
+    .p-item:nth-child(11) { grid-column: span 6; }
+    .p-item:nth-child(12) { grid-column: span 6; }
+    .p-aspect { padding-top: 70%; }
+    .p-item:nth-child(1) .p-aspect,
+    .p-item:nth-child(6) .p-aspect { padding-top: 56%; }
+    .p-thumb {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; transition: transform .55s ease;
+    }
+    .p-item:hover .p-thumb { transform: scale(1.07); }
+    .p-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(13,13,13,.9) 0%, transparent 55%);
+      opacity: 0; transition: opacity .3s;
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 1.25rem;
+    }
+    .p-item:hover .p-overlay { opacity: 1; }
+    .p-title { font-family: var(--font-display); font-size: .95rem; font-weight: 700; color: var(--white); margin-bottom: .2rem; }
+    .p-cat { font-size: .62rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--pink); }
+    .p-arrow {
+      position: absolute; top: .9rem; right: .9rem;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--green); display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: scale(.7); transition: opacity .3s, transform .3s;
+    }
+    .p-item:hover .p-arrow { opacity: 1; transform: scale(1); }
+    .p-arrow svg { width: 14px; height: 14px; stroke: var(--black); fill: none; stroke-width: 2.5; }
+
+    .portfolio-cta { text-align: center; margin-top: 2.5rem; }
+    .btn-outline-white {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .8rem; font-weight: 600;
+      color: var(--white); border: 1.5px solid rgba(255,255,255,.3);
+      padding: .85em 2em; border-radius: 100px;
+      transition: border-color .25s, background .25s, transform .2s;
+    }
+    .btn-outline-white:hover { border-color: var(--green); color: var(--green); transform: translateY(-2px); }
+
+    /* ─────────────────────────────────────
+       PROCESO — layout dividido
+    ───────────────────────────────────── */
+    .process { padding: clamp(5rem,10vw,9rem) 0; position: relative; z-index: 1; }
+    .process-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+
+    .process-steps { display: flex; flex-direction: column; gap: 0; }
+    .proc-step {
+      display: grid; grid-template-columns: 52px 1fr; gap: 1.25rem;
+      padding: 1.5rem 0; border-bottom: 1px solid rgba(0,0,0,.1);
+      transition: background .2s;
+    }
+    .proc-step:first-child { border-top: 1px solid rgba(0,0,0,.1); }
+    .proc-num {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--black); display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 1rem; font-weight: 900; color: var(--white);
+      flex-shrink: 0; transition: background .3s;
+    }
+    .proc-step:hover .proc-num { background: var(--red); }
+    .proc-name { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; color: var(--black); margin-bottom: .35rem; }
+    .proc-desc { font-size: .78rem; font-weight: 300; line-height: 1.8; color: #555; }
+
+    /* Tarjeta oscura con quote + CTA */
+    .process-card {
+      background: var(--black); border-radius: 28px;
+      padding: clamp(2rem,4vw,3rem);
+      position: relative; overflow: hidden;
+    }
+    .pc-deco-ast {
+      position: absolute; top: -10px; right: 20px;
+      font-size: 160px; color: var(--purple); opacity: .15; line-height: 1;
+      animation: spin 20s linear infinite;
+    }
+    .pc-kicker { font-size: .62rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--green); margin-bottom: 1.5rem; }
+    .pc-quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem,2.5vw,2rem);
+      font-weight: 700; font-style: italic; color: var(--white);
+      line-height: 1.35; margin-bottom: 2rem;
+      position: relative; z-index: 1;
+    }
+    .pc-quote em { font-style: normal; color: var(--green); }
+    .pc-cta {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--red); color: var(--white);
+      font-size: .78rem; font-weight: 600; padding: .8em 1.8em; border-radius: 100px;
+      transition: background .25s, transform .2s; position: relative; z-index: 1;
+    }
+    .pc-cta:hover { background: #c93209; transform: translateY(-2px); }
+
+    /* ─────────────────────────────────────
+       HERRAMIENTAS
+    ───────────────────────────────────── */
+    .tools { padding: clamp(4rem,8vw,7rem) 0; background: var(--black); position: relative; z-index: 1; }
+    .tools .kicker-text { color: var(--green); }
+    .tools .kicker-line { background: var(--green); }
+    .tools .section-title { color: var(--white); margin-bottom: 3rem; }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 1px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 20px; overflow: hidden;
+    }
+    .tool-card {
+      background: #111;
+      padding: 2rem 1.75rem 1.75rem;
+      display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;
+      transition: background .3s;
+      position: relative; overflow: hidden;
+    }
+    .tool-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px;
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .4s ease;
+    }
+    .tool-card:nth-child(1)::after { background: var(--red); }
+    .tool-card:nth-child(2)::after { background: var(--pink); }
+    .tool-card:nth-child(3)::after { background: var(--purple); }
+    .tool-card:nth-child(4)::after { background: var(--green); }
+    .tool-card:hover::after { transform: scaleX(1); }
+    .tool-card:nth-child(1):hover { background: rgba(235,66,19,.08); }
+    .tool-card:nth-child(2):hover { background: rgba(255,153,220,.08); }
+    .tool-card:nth-child(3):hover { background: rgba(130,109,238,.08); }
+    .tool-card:nth-child(4):hover { background: rgba(216,243,130,.08); }
+
+    .tool-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; font-weight: 900;
+      font-family: var(--font-display); flex-shrink: 0;
+    }
+    .tool-icon-ai { background: rgba(235,66,19,.15); color: var(--red); }
+    .tool-icon-ps { background: rgba(255,153,220,.12); color: var(--pink); }
+    .tool-icon-id { background: rgba(130,109,238,.15); color: var(--purple); }
+    .tool-icon-fg { background: rgba(216,243,130,.12); color: var(--green); }
+
+    .tool-name {
+      font-family: var(--font-display); font-size: 1.2rem; font-weight: 700;
+      color: var(--white); line-height: 1;
+    }
+    .tool-level {
+      font-size: .65rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      margin-top: .15rem;
+    }
+    .tool-card:nth-child(1) .tool-level { color: var(--red); }
+    .tool-card:nth-child(2) .tool-level { color: var(--pink); }
+    .tool-card:nth-child(3) .tool-level { color: var(--purple); }
+    .tool-card:nth-child(4) .tool-level { color: var(--green); }
+
+    .tool-stars {
+      display: flex; gap: 4px; margin-top: auto;
+    }
+    .tool-stars svg {
+      width: 14px; height: 14px;
+    }
+    .star-filled { fill: currentColor; }
+    .star-empty  { fill: rgba(255,255,255,.15); }
+    .tool-card:nth-child(1) .tool-stars { color: var(--red); }
+    .tool-card:nth-child(2) .tool-stars { color: var(--pink); }
+    .tool-card:nth-child(3) .tool-stars { color: var(--purple); }
+    .tool-card:nth-child(4) .tool-stars { color: var(--green); }
+
+    /* ─────────────────────────────────────
+       TESTIMONIOS
+    ───────────────────────────────────── */
+    /* Mismo universo oscuro que portfolio y tools */
+    .testimonials { padding: clamp(4rem,8vw,8rem) 0; background: #0D0D0D; position: relative; z-index: 1; }
+    .testimonials .section-title { color: var(--white); }
+    .testimonials .kicker-text { color: var(--pink); }
+    .testimonials .kicker-line { background: var(--pink); }
+
+    .testi-title-wrap { margin-bottom: 3rem; }
+
+    .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+    .testi-card {
+      background: #161616;
+      border-radius: 20px; padding: 2rem;
+      border: 1px solid rgba(255,255,255,.07);
+      transition: transform .3s, border-color .3s;
+      position: relative;
+    }
+    .testi-card:nth-child(1):hover { border-color: var(--red);    transform: translateY(-5px) rotate(-.4deg); }
+    .testi-card:nth-child(2):hover { border-color: var(--pink);   transform: translateY(-5px) rotate(.4deg); }
+    .testi-card:nth-child(3):hover { border-color: var(--purple); transform: translateY(-5px) rotate(-.4deg); }
+    .testi-qmark {
+      font-family: var(--font-display); font-size: 3.5rem; line-height: .7;
+      margin-bottom: 1rem;
+    }
+    .testi-card:nth-child(1) .testi-qmark { color: var(--red); }
+    .testi-card:nth-child(2) .testi-qmark { color: var(--pink); }
+    .testi-card:nth-child(3) .testi-qmark { color: var(--purple); }
+    .testi-text {
+      font-size: .85rem; font-weight: 300; line-height: 1.8;
+      color: rgba(255,255,255,.7); font-style: italic; margin-bottom: 1.5rem;
+    }
+    .testi-author { display: flex; align-items: center; gap: .8rem; }
+    .testi-av {
+      width: 42px; height: 42px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 1rem; font-weight: 700;
+      color: var(--black); flex-shrink: 0;
+    }
+    .testi-card:nth-child(1) .testi-av { background: var(--red); color: var(--white); }
+    .testi-card:nth-child(2) .testi-av { background: var(--pink); }
+    .testi-card:nth-child(3) .testi-av { background: var(--purple); color: var(--white); }
+    .testi-name { font-size: .82rem; font-weight: 600; color: var(--white); }
+    .testi-co { font-size: .7rem; font-weight: 300; color: rgba(255,255,255,.4); }
+    .testi-stars {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      font-size: .7rem; letter-spacing: 1px;
+    }
+    .testi-card:nth-child(1) .testi-stars { color: var(--red); }
+    .testi-card:nth-child(2) .testi-stars { color: var(--pink); }
+    .testi-card:nth-child(3) .testi-stars { color: var(--purple); }
+
+    /* ─────────────────────────────────────
+       CTA FINAL — mismo fondo oscuro, acento verde
+    ───────────────────────────────────── */
+    .cta-section {
+      padding: clamp(5rem,10vw,9rem) 0;
+      background: var(--black);
+      border-top: 1px solid rgba(255,255,255,.06);
+      position: relative; z-index: 1; overflow: hidden;
+    }
+    /* Grid de fondo estilo diseño gráfico */
+    .cta-grid-deco {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+    .cta-ast {
+      position: absolute; right: 6%; top: 50%; transform: translateY(-50%);
+      font-size: 200px; color: rgba(216,243,130,.06); line-height: 1;
+      animation: spin 20s linear infinite;
+    }
+    .cta-pill-deco {
+      position: absolute; left: 4%; bottom: 15%;
+      background: rgba(130,109,238,.12); border: 1px solid rgba(130,109,238,.25);
+      border-radius: 100px; padding: .5rem 1.2rem;
+      font-size: .65rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--purple);
+    }
+    .cta-inner { text-align: center; max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
+    .cta-kicker {
+      display: inline-block;
+      font-size: .65rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 1.5rem;
+    }
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem,5vw,5rem);
+      font-weight: 900; line-height: .95;
+      color: var(--white); margin-bottom: .5rem;
+    }
+    .cta-title em { font-style: italic; color: var(--green); }
+    .cta-sub { font-size: .9rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,.5); margin-bottom: 2.5rem; }
+    .cta-actions { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .btn-cta-main {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--red); color: var(--white);
+      font-family: var(--font-body); font-size: .8rem; font-weight: 700;
+      padding: 1em 2.2em; border-radius: 100px;
+      transition: transform .2s, background .25s;
+      box-shadow: 4px 4px 0 rgba(235,66,19,.3);
+    }
+    .btn-cta-main:hover { transform: translateY(-3px) rotate(-1deg); background: #c93209; }
+    .btn-cta-main svg { width: 18px; height: 18px; fill: currentColor; }
+    .btn-cta-ghost {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .8rem; font-weight: 500; color: rgba(255,255,255,.5);
+      border-bottom: 1.5px solid rgba(255,255,255,.2); padding-bottom: 2px;
+      transition: color .2s, border-color .2s;
+    }
+    .btn-cta-ghost:hover { color: var(--white); border-color: var(--white); }
+
+    /* ─────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────── */
+    footer {
+      background: var(--black); color: rgba(255,255,255,.45);
+      padding: 2rem 0;
+    }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: rgba(255,255,255,.7); }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links a { font-size: .72rem; color: rgba(255,255,255,.4); transition: color .2s; }
+    .footer-links a:hover { color: var(--pink); }
+    .footer-copy { font-size: .72rem; }
+
+    /* ─────────────────────────────────────
+       MOBILE MENU
+    ───────────────────────────────────── */
+    .mobile-menu {
+      position: fixed; inset: 0; background: var(--black); z-index: 200;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+      transform: translateX(100%); transition: transform .4s cubic-bezier(.4,0,.2,1);
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-menu a { font-family: var(--font-display); font-size: 2.5rem; font-weight: 900; color: var(--white); transition: color .2s; }
+    .mobile-menu a:hover { color: var(--red); }
+    .mobile-close {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      background: none; border: none; color: var(--white); font-size: 1.5rem; cursor: pointer;
+    }
+
+    /* ─────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────── */
+    @media (max-width: 960px) {
+      body { cursor: auto; }
+      .cursor, .cursor-ring { display: none; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .process-grid { grid-template-columns: 1fr; }
+      .process-card { display: none; }
+      .tools-grid { grid-template-columns: 1fr 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .p-grid { grid-template-columns: 1fr 1fr; }
+      .p-item { grid-column: span 1 !important; }
+      .p-item .p-aspect { padding-top: 70% !important; }
+      .nav-links, .nav-btn { display: none; }
+      .hamburger { display: flex; }
+      .services-header { flex-direction: column; align-items: flex-start; }
+      .services-sub { text-align: left; }
+    }
+    @media (max-width: 580px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .tools-grid { grid-template-columns: 1fr 1fr; }
+      .p-grid { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cursor custom -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Shapes de fondo -->
+  <div class="bg-shapes" aria-hidden="true">
+    <div class="shape shape-circle-1"></div>
+    <div class="shape shape-circle-2"></div>
+    <div class="shape shape-star-big">✳</div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" onclick="toggleMenu()">✕</button>
+    <a href="#servicios" onclick="toggleMenu()">Servicios</a>
+    <a href="#portfolio" onclick="toggleMenu()">Portfolio</a>
+    <a href="#proceso" onclick="toggleMenu()">Proceso</a>
+    <a href="#contacto" onclick="toggleMenu()">Contacto</a>
+  </div>
+
+  <!-- ── NAV ── -->
+  <nav id="nav">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#">
+          <svg class="nav-logo-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="46" height="46" rx="12" fill="#0D0D0D"/>
+            <text x="24" y="30" text-anchor="middle" font-family="Playfair Display, serif" font-size="18" font-weight="900" fill="#D8F382">VR</text>
+          </svg>
+        </a>
+        <ul class="nav-links">
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#proceso">Proceso</a></li>
+          <li><a href="#testimonios">Clientes</a></li>
+        </ul>
+        <a href="https://wa.me/543412345678?text=Hola%20Valentina!%20Vi%20tu%20portfolio%20y%20me%20gustaría%20hablar%20sobre%20mi%20proyecto." class="nav-btn" target="_blank" rel="noopener">
+          Hablemos →
+        </a>
+        <button class="hamburger" onclick="toggleMenu()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero" id="inicio">
+    <div class="container">
+      <div class="hero-inner">
+
+        <div>
+          <div class="hero-eyebrow">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">Diseñadora Gráfica Freelance · Rosario <span class="ast">✳</span></span>
+          </div>
+
+          <h1 class="hero-title">
+            Diseño<br/>
+            <span class="line-italic">que impacta,</span>
+            <span class="line-outline">que vende.</span>
+          </h1>
+
+          <!-- Flecha curva SVG -->
+          <svg class="hero-arrow" width="120" height="40" viewBox="0 0 120 40" fill="none" aria-hidden="true">
+            <path d="M5 10 Q40 -5 80 20 Q100 30 110 32" stroke="#EB4213" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <path d="M100 25 L110 32 L103 36" stroke="#EB4213" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+
+          <p class="hero-sub">
+            Construyo identidades visuales que hacen que tu marca se reconozca, se recuerde y convierta. Branding, contenido para redes, ads y editorial.
+          </p>
+
+          <div class="hero-actions">
+            <a href="https://wa.me/543412345678?text=Hola%20Valentina!" class="btn-wa" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+              Escribime por WhatsApp
+            </a>
+            <a href="#portfolio" class="btn-ghost">
+              Ver portfolio
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-img-main">
+            <img
+              src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/max_808/80ad52244781109.Y3JvcCwxMDgwLDg0NCwwLDI1MQ.png&w=800&output=webp"
+              alt="Identidad Visual Botánico — Portfolio Valentina Rial"
+            />
+          </div>
+          <div class="hero-badge">
+            <strong>+3</strong>
+            años de experiencia
+          </div>
+          <div class="hero-floating-pill">✦ Disponible para proyectos</div>
+          <div class="hero-ast-deco" aria-hidden="true">✳</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STRIP ── -->
+  <div class="strip" aria-hidden="true">
+    <div class="strip-inner">
+      <span>Branding</span><span class="sdot"></span>
+      <span>Identidad Visual</span><span class="sdot"></span>
+      <span>Contenido para Redes</span><span class="sdot"></span>
+      <span>Diseño Editorial</span><span class="sdot"></span>
+      <span>Ads & Marketing</span><span class="sdot"></span>
+      <span>Creación de Logo</span><span class="sdot"></span>
+      <span>Manual de Marca</span><span class="sdot"></span>
+      <span>Branding</span><span class="sdot"></span>
+      <span>Identidad Visual</span><span class="sdot"></span>
+      <span>Contenido para Redes</span><span class="sdot"></span>
+      <span>Diseño Editorial</span><span class="sdot"></span>
+      <span>Ads & Marketing</span><span class="sdot"></span>
+      <span>Creación de Logo</span><span class="sdot"></span>
+      <span>Manual de Marca</span><span class="sdot"></span>
+    </div>
+  </div>
+
+  <!-- ── SERVICIOS ── -->
+  <section class="services" id="servicios">
+    <div class="container">
+      <div class="services-header reveal">
+        <div>
+          <div class="section-kicker"><span class="kicker-line"></span><span class="kicker-text">Lo que hago</span></div>
+          <h2 class="section-title">Servicios de<br/><em>diseño</em> ✳</h2>
+        </div>
+        <p class="services-sub">Cada servicio pensado para que tu marca tenga presencia real, coherente y con carácter propio.</p>
+      </div>
+
+      <div class="services-grid reveal">
+
+        <div class="svc-card">
+          <span class="svc-num">01</span>
+          <div class="svc-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3 class="svc-name">Identidad Visual & Branding</h3>
+          <p class="svc-desc">Logo, paleta, tipografía y todos los elementos que hacen que te reconozcan al instante. Tu marca, con personalidad.</p>
+        </div>
+
+        <div class="svc-card">
+          <span class="svc-num">02</span>
+          <div class="svc-icon-wrap">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          </div>
+          <h3 class="svc-name">Creación de Logo</h3>
+          <p class="svc-desc">Logos únicos que capturan la esencia de tu negocio. Conceptualización, bocetos y entrega en todos los formatos.</p>
+        </div>
+
+        <div class="svc-card">
+          <span class="svc-num">03</span>
+          <div class="svc-icon-wrap">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <h3 class="svc-name">Contenido para Redes</h3>
+          <p class="svc-desc">Posts, stories, reels y carruseles con diseño estratégico. Contenido que detiene el scroll y comunica con claridad.</p>
+        </div>
+
+        <div class="svc-card">
+          <span class="svc-num">04</span>
+          <div class="svc-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+          </div>
+          <h3 class="svc-name">Ads & Marketing</h3>
+          <p class="svc-desc">Anuncios para Meta, Google y más. Diseño pensado para captar atención y llevarte clics reales.</p>
+        </div>
+
+        <div class="svc-card">
+          <span class="svc-num">05</span>
+          <div class="svc-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <h3 class="svc-name">Piezas Editoriales</h3>
+          <p class="svc-desc">Catálogos, folletos, newsletters y brochures que representan tu marca con profesionalismo en papel y digital.</p>
+        </div>
+
+        <div class="svc-card">
+          <span class="svc-num">06</span>
+          <div class="svc-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <h3 class="svc-name">Manual de Marca</h3>
+          <p class="svc-desc">Documentación completa de tu universo visual. Reglas claras para que todo lo que salga sea coherente y profesional.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PORTFOLIO ── -->
+  <section class="portfolio" id="portfolio">
+    <div class="container">
+      <div class="services-header reveal">
+        <div>
+          <div class="section-kicker"><span class="kicker-line"></span><span class="kicker-text">Trabajos reales</span></div>
+          <h2 class="section-title" style="color:#FAFAFA;">Port<em style="color:var(--pink);">folio</em></h2>
+        </div>
+        <p class="services-sub">Proyectos con marcas reales. Cada uno con un desafío diferente, resuelto con diseño.</p>
+      </div>
+
+      <div class="p-grid">
+
+        <a class="p-item reveal" href="https://www.behance.net/gallery/244781109/Botanico-Identidad-visual" target="_blank" rel="noopener" aria-label="Botánico - Identidad visual en Behance">
+          <div class="p-aspect"></div>
+          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/max_808/80ad52244781109.Y3JvcCwxMDgwLDg0NCwwLDI1MQ.png&w=600&output=webp" alt="Botánico Identidad Visual" loading="lazy"/>
+          <div class="p-overlay"><div class="p-title">Botánico — Identidad Visual</div><div class="p-cat">Branding · Logo</div></div>
+          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
+        </a>
+
+        <a class="p-item reveal" href="https://www.behance.net/gallery/246293129/Anuncio-Redes-Web" target="_blank" rel="noopener" aria-label="Anuncio Redes Web en Behance">
+          <div class="p-aspect"></div>
+          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/27a1a5246293129.Y3JvcCw5OTksNzgyLDAsMTA4.png&w=600&output=webp" alt="Anuncio Redes Web" loading="lazy"/>
+          <div class="p-overlay"><div class="p-title">Anuncio · Redes · Web</div><div class="p-cat">Marketing · Ads</div></div>
+          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
+        </a>
+
+        <a class="p-item reveal" href="https://www.behance.net/gallery/244853921/Diario-Edicion-Universidad" target="_blank" rel="noopener" aria-label="Diario Edición Universidad en Behance">
+          <div class="p-aspect"></div>
+          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/0d4a74244853921.Y3JvcCwzODM1LDMwMDAsMzMyLDA.png&w=500&output=webp" alt="Diario Edición Universidad" loading="lazy"/>
+          <div class="p-overlay"><div class="p-title">Diario — Edición Universidad</div><div class="p-cat">Editorial</div></div>
+          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
+        </a>
+
+        <a class="p-item reveal" href="https://www.behance.net/gallery/244792863/CHESCA-nails-Re-diseno-de-logo" target="_blank" rel="noopener" aria-label="CHESCA nails en Behance">
+          <div class="p-aspect"></div>
+          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/cc7ca8244792863.Y3JvcCwxMDIyLDgwMCwxODcsMA.png&w=500&output=webp" alt="CHESCA nails" loading="lazy"/>
+          <div class="p-overlay"><div class="p-title">CHESCA Nails — Rediseño de Logo</div><div class="p-cat">Logo · Branding</div></div>
+          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
+        </a>
+
+        <a class="p-item reveal" href="https://www.behance.net/gallery/244589161/Creacion-de-contenido" target="_blank" rel="noopener" aria-label="Creación de contenido en Behance">
+          <div class="p-aspect"></div>
+          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/c5b1da244589161.Y3JvcCwyNDAxLDE4NzgsMCwyNjE.png&w=500&output=webp" alt="Creación de contenido" loading="lazy"/>
+          <div class="p-overlay"><div class="p-title">Creación de Contenido</div><div class="p-cat">Social Media</div></div>
+          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
+        </a>
+
+        <a class="p-item reveal" href="https://www.behance.net/gallery/233814837/Identidad-visual" target="_blank" rel="noopener" aria-label="Identidad visual en Behance">
+          <div class="p-aspect"></div>
+          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/32b903233814837.Y3JvcCw0MzIwLDMzNzksMCwxMDA1.png&w=600&output=webp" alt="Identidad Visual" loading="lazy"/>
+          <div class="p-overlay"><div class="p-title">Identidad Visual</div><div class="p-cat">Branding Completo</div></div>
+          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
+        </a>
+
+        <a class="p-item reveal" href="https://www.behance.net/gallery/234219097/Manual-de-marca" target="_blank" rel="noopener" aria-label="Manual de marca en Behance">
+          <div class="p-aspect"></div>
+          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/bea07e234219097.Y3JvcCw1NTIzLDQzMjAsMTA4MCww.png&w=500&output=webp" alt="Manual de marca" loading="lazy"/>
+          <div class="p-overlay"><div class="p-title">Manual de Marca</div><div class="p-cat">Brand Guidelines</div></div>
+          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
+        </a>
+
+        <a class="p-item reveal" href="https://www.behance.net/gallery/226762295/Visual-Identity-Dulce-Estacion" target="_blank" rel="noopener" aria-label="Dulce Estación en Behance">
+          <div class="p-aspect"></div>
+          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/a23e84226762295.Y3JvcCwzMTE5LDI0NDAsMjYyLDA.png&w=500&output=webp" alt="Dulce Estación" loading="lazy"/>
+          <div class="p-overlay"><div class="p-title">Dulce Estación — Identidad Visual</div><div class="p-cat">Branding · Logo</div></div>
+          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
+        </a>
+
+        <a class="p-item reveal" href="https://www.behance.net/gallery/246031431/Newsletter-Beauty-Industry" target="_blank" rel="noopener" aria-label="Newsletter Beauty Industry en Behance">
+          <div class="p-aspect"></div>
+          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/6c97f6246031431.Y3JvcCw5OTksNzgyLDAsMTA4.png&w=500&output=webp" alt="Newsletter Beauty" loading="lazy"/>
+          <div class="p-overlay"><div class="p-title">Newsletter — Beauty Industry</div><div class="p-cat">Editorial · Email</div></div>
+          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
+        </a>
+
+        <a class="p-item reveal" href="https://www.behance.net/gallery/227029247/Social-Media-Ad-Design" target="_blank" rel="noopener" aria-label="Social Media Ad Design en Behance">
+          <div class="p-aspect"></div>
+          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/9b1f42227029247.Y3JvcCwxMzQyLDEwNTAsMjksMA.png&w=500&output=webp" alt="Social Media Ad" loading="lazy"/>
+          <div class="p-overlay"><div class="p-title">Social Media Ad Design</div><div class="p-cat">Ads · Redes</div></div>
+          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
+        </a>
+
+        <a class="p-item reveal" href="https://www.behance.net/gallery/226445167/Identidad-Visual" target="_blank" rel="noopener" aria-label="Identidad Visual en Behance">
+          <div class="p-aspect"></div>
+          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/1d9e17226445167.Y3JvcCwxNDM4LDExMjUsMzIsMA.png&w=500&output=webp" alt="Identidad Visual" loading="lazy"/>
+          <div class="p-overlay"><div class="p-title">Identidad Visual</div><div class="p-cat">Branding</div></div>
+          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
+        </a>
+
+        <a class="p-item reveal" href="https://www.behance.net/gallery/225951353/Infografia" target="_blank" rel="noopener" aria-label="Infografía en Behance">
+          <div class="p-aspect"></div>
+          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/4fb16e225951353.Y3JvcCwzOTEyLDMwNjAsODcsMA.png&w=500&output=webp" alt="Infografía" loading="lazy"/>
+          <div class="p-overlay"><div class="p-title">Infografía</div><div class="p-cat">Diseño Editorial</div></div>
+          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
+        </a>
+
+      </div>
+
+      <div class="portfolio-cta reveal">
+        <a href="https://www.behance.net/valentinarial" class="btn-outline-white" target="_blank" rel="noopener">
+          Ver portfolio completo en Behance →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROCESO ── -->
+  <section class="process" id="proceso">
+    <div class="container">
+      <div class="process-grid">
+        <div>
+          <div class="section-kicker reveal"><span class="kicker-line"></span><span class="kicker-text">Cómo trabajo</span></div>
+          <h2 class="section-title reveal" style="margin-bottom:2rem;">Un proceso<br/><em>sin vueltas</em></h2>
+
+          <div class="process-steps">
+            <div class="proc-step reveal">
+              <div class="proc-num">1</div>
+              <div>
+                <div class="proc-name">Brief & Diagnóstico</div>
+                <p class="proc-desc">Empezamos con una charla para entender tu marca, tu cliente ideal y lo que querés lograr. Sin formularios largos.</p>
+              </div>
+            </div>
+            <div class="proc-step reveal">
+              <div class="proc-num">2</div>
+              <div>
+                <div class="proc-name">Investigación & Concepto</div>
+                <p class="proc-desc">Analizo tu industria y competencia. De ahí surge una dirección creativa clara antes de diseñar una sola línea.</p>
+              </div>
+            </div>
+            <div class="proc-step reveal">
+              <div class="proc-num">3</div>
+              <div>
+                <div class="proc-name">Diseño & Revisiones</div>
+                <p class="proc-desc">Presento propuestas reales, no bocetos. Ajustamos juntos hasta que quedes 100% conforme con el resultado.</p>
+              </div>
+            </div>
+            <div class="proc-step reveal">
+              <div class="proc-num">4</div>
+              <div>
+                <div class="proc-name">Entrega Final</div>
+                <p class="proc-desc">Todos los archivos organizados, en los formatos que necesitás para usar de inmediato: web, impresión y redes.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="process-card reveal">
+          <div class="pc-deco-ast" aria-hidden="true">✳</div>
+          <p class="pc-kicker">✦ Para vos que querés diferenciarte</p>
+          <p class="pc-quote">
+            "El diseño no es decoración.<br/>
+            Es la forma en que <em>tu marca habla</em> antes de que abras la boca."
+          </p>
+          <!-- Flecha SVG dentro de la tarjeta -->
+          <svg width="80" height="32" viewBox="0 0 80 32" fill="none" style="margin-bottom:1.5rem;" aria-hidden="true">
+            <path d="M4 16 Q30 4 60 18 Q68 22 72 24" stroke="#D8F382" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <path d="M64 18 L72 24 L66 28" stroke="#D8F382" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+          <div>
+            <a href="https://wa.me/543412345678?text=Hola%20Valentina!%20Me%20gustaría%20empezar%20un%20proyecto." class="pc-cta" target="_blank" rel="noopener">
+              Empezá hoy →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HERRAMIENTAS ── -->
+  <section class="tools" id="herramientas">
+    <div class="container">
+      <div class="services-header reveal">
+        <div>
+          <div class="section-kicker"><span class="kicker-line"></span><span class="kicker-text">Con qué trabajo</span></div>
+          <h2 class="section-title">Herramientas ✳</h2>
+        </div>
+        <p class="services-sub" style="color:rgba(255,255,255,.4);">Las mismas que usan las mejores agencias del mundo. Dominio completo de cada una.</p>
+      </div>
+
+      <div class="tools-grid reveal">
+
+        <!-- Illustrator -->
+        <div class="tool-card">
+          <div class="tool-icon tool-icon-ai">Ai</div>
+          <div>
+            <div class="tool-name">Illustrator</div>
+            <div class="tool-level">Avanzado</div>
+          </div>
+          <div class="tool-stars">
+            <svg viewBox="0 0 16 16"><path class="star-filled" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path class="star-filled" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path class="star-filled" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path class="star-filled" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path class="star-filled" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+          </div>
+        </div>
+
+        <!-- Photoshop -->
+        <div class="tool-card">
+          <div class="tool-icon tool-icon-ps">Ps</div>
+          <div>
+            <div class="tool-name">Photoshop</div>
+            <div class="tool-level">Avanzado</div>
+          </div>
+          <div class="tool-stars">
+            <svg viewBox="0 0 16 16"><path class="star-filled" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path class="star-filled" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path class="star-filled" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path class="star-filled" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path class="star-filled" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+          </div>
+        </div>
+
+        <!-- InDesign -->
+        <div class="tool-card">
+          <div class="tool-icon tool-icon-id">Id</div>
+          <div>
+            <div class="tool-name">InDesign</div>
+            <div class="tool-level">Avanzado</div>
+          </div>
+          <div class="tool-stars">
+            <svg viewBox="0 0 16 16"><path class="star-filled" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path class="star-filled" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path class="star-filled" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path class="star-filled" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path class="star-filled" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+          </div>
+        </div>
+
+        <!-- Figma -->
+        <div class="tool-card">
+          <div class="tool-icon tool-icon-fg">Fg</div>
+          <div>
+            <div class="tool-name">Figma</div>
+            <div class="tool-level">Intermedio — Avanzado</div>
+          </div>
+          <div class="tool-stars">
+            <svg viewBox="0 0 16 16"><path class="star-filled" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path class="star-filled" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path class="star-filled" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path class="star-filled" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path class="star-empty" d="M8 1l1.85 3.75 4.15.6-3 2.93.71 4.13L8 10.35l-3.71 1.96.71-4.13-3-2.93 4.15-.6z"/></svg>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIOS ── -->
+  <section class="testimonials" id="testimonios">
+    <div class="container">
+      <div class="testi-title-wrap reveal">
+        <div class="section-kicker"><span class="kicker-line"></span><span class="kicker-text">Qué dicen</span></div>
+        <h2 class="section-title">
+          Clientes que <span class="underline-red">confiaron</span>
+          <svg width="60" height="40" viewBox="0 0 60 40" fill="none" style="display:inline-block;vertical-align:middle;margin-left:.5rem;" aria-hidden="true">
+            <path d="M5 8 Q20 2 40 22 Q46 28 50 34" stroke="rgba(255,255,255,.4)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <path d="M42 28 L50 34 L44 36" stroke="rgba(255,255,255,.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </h2>
+      </div>
+
+      <div class="testi-grid">
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-qmark">"</div>
+          <p class="testi-text">Valentina entendió exactamente lo que necesitábamos. Nuestra identidad visual quedó impecable — elegante, moderna y totalmente alineada con nuestra marca. Los resultados en redes fueron inmediatos.</p>
+          <div class="testi-author">
+            <div class="testi-av">ML</div>
+            <div>
+              <div class="testi-name">María Laura González</div>
+              <div class="testi-co">Fundadora · Dulce Estación</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-qmark">"</div>
+          <p class="testi-text">El manual de marca que nos entregó cambió la forma en que comunicamos. Ahora todo lo que publicamos tiene coherencia y nivel profesional. Vale cada peso invertido.</p>
+          <div class="testi-author">
+            <div class="testi-av">RP</div>
+            <div>
+              <div class="testi-name">Rodrigo Pérez</div>
+              <div class="testi-co">Director de Marketing · Empresa B2B</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-qmark">"</div>
+          <p class="testi-text">Super profesional y con una visión creativa increíble. El contenido que diseñó para nuestras redes triplicó el engagement en el primer mes. La recomendaría sin dudarlo.</p>
+          <div class="testi-author">
+            <div class="testi-av">SA</div>
+            <div>
+              <div class="testi-name">Sofía Ahumada</div>
+              <div class="testi-co">CEO · Startup de e-commerce</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA FINAL ── -->
+  <section class="cta-section" id="contacto">
+    <div class="cta-grid-deco"></div>
+    <div class="cta-ast" aria-hidden="true">✳</div>
+    <div class="cta-pill-deco">✦ Disponible para proyectos</div>
+    <div class="container">
+      <div class="cta-inner reveal">
+        <span class="cta-kicker">✳ ¿Arrancamos?</span>
+        <h2 class="cta-title">
+          Tu marca merece<br/>
+          <em>un diseño a su altura</em>
+        </h2>
+        <svg width="280" height="14" viewBox="0 0 280 14" fill="none" style="display:block;margin:-.5rem auto 1.5rem;" aria-hidden="true">
+          <path d="M4 10 Q70 3 140 9 Q210 15 276 6" stroke="#D8F382" stroke-width="3" stroke-linecap="round" fill="none"/>
+        </svg>
+        <p class="cta-sub">Contame tu proyecto. Una conversación de 15 minutos es suficiente para saber si somos el match indicado.</p>
+        <div class="cta-actions">
+          <a href="https://wa.me/543412345678?text=Hola%20Valentina!%20Vi%20tu%20portfolio%20y%20me%20gustaría%20hablar%20sobre%20mi%20proyecto%20de%20diseño." class="btn-cta-main" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Escribime por WhatsApp
+          </a>
+          <a href="https://www.behance.net/valentinarial" class="btn-cta-ghost" target="_blank" rel="noopener">
+            Ver Behance →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">Valentina Rial ✳</div>
+        <ul class="footer-links">
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="https://www.behance.net/valentinarial" target="_blank" rel="noopener">Behance</a></li>
+          <li><a href="http://instagram.com/portfolioval" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+        <p class="footer-copy">© 2025 Valentina Rial — Diseño Gráfico</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Custom cursor ──
+    const cursor = document.getElementById('cursor');
+    const ring   = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function animCursor() {
+      if(cursor) { cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'; }
+      rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+      if(ring) { ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; }
+      requestAnimationFrame(animCursor);
+    }
+    animCursor();
+    document.querySelectorAll('a, button, .svc-card, .p-item').forEach(el => {
+      el.addEventListener('mouseenter', () => { if(cursor){ cursor.style.width='20px'; cursor.style.height='20px'; cursor.style.background='var(--purple)'; } });
+      el.addEventListener('mouseleave', () => { if(cursor){ cursor.style.width='12px'; cursor.style.height='12px'; cursor.style.background='var(--red)'; } });
+    });
+
+    // ── Nav scroll ──
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 50), { passive: true });
+
+    // ── Reveal on scroll ──
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // ── Mobile menu ──
+    function toggleMenu() {
+      const m = document.getElementById('mobileMenu');
+      m.classList.toggle('open');
+      document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
+    }
+
+    // ── Smooth scroll ──
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+  </script>
+</body>
+</html>
