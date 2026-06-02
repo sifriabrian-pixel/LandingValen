@@ -308,7 +308,7 @@
       animation: fadeUp .8s ease both .3s;
     }
     .hero-img-main img {
-      width: 100%; height: 100%; object-fit: cover;
+      width: 100%; height: 100%; object-fit: cover; object-position: center top;
       transition: transform .6s ease;
     }
     .hero-img-main:hover img { transform: scale(1.04); }
@@ -448,28 +448,22 @@
 
     .p-grid {
       display: grid;
-      grid-template-columns: repeat(12,1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 1rem;
     }
     .p-item {
       position: relative; overflow: hidden; border-radius: 16px;
       background: #1a1a1a; cursor: pointer;
     }
-    .p-item:nth-child(1)  { grid-column: span 5; }
-    .p-item:nth-child(2)  { grid-column: span 7; }
-    .p-item:nth-child(3)  { grid-column: span 4; }
-    .p-item:nth-child(4)  { grid-column: span 4; }
-    .p-item:nth-child(5)  { grid-column: span 4; }
-    .p-item:nth-child(6)  { grid-column: span 7; }
-    .p-item:nth-child(7)  { grid-column: span 5; }
-    .p-item:nth-child(8)  { grid-column: span 4; }
-    .p-item:nth-child(9)  { grid-column: span 4; }
-    .p-item:nth-child(10) { grid-column: span 4; }
-    .p-item:nth-child(11) { grid-column: span 6; }
-    .p-item:nth-child(12) { grid-column: span 6; }
-    .p-aspect { padding-top: 70%; }
-    .p-item:nth-child(1) .p-aspect,
-    .p-item:nth-child(6) .p-aspect { padding-top: 56%; }
+    /* Fila 1: Botánico y CHESCA — cuadradas/verticales */
+    .p-item:nth-child(1),
+    .p-item:nth-child(2) { }
+    /* Fila 2: Smart Assistant y Pulsetrack — más horizontales */
+    .p-item:nth-child(3),
+    .p-item:nth-child(4) { }
+    .p-aspect { padding-top: 100%; }
+    .p-item:nth-child(3) .p-aspect,
+    .p-item:nth-child(4) .p-aspect { padding-top: 62%; }
     .p-thumb {
       position: absolute; inset: 0; width: 100%; height: 100%;
       object-fit: cover; transition: transform .55s ease;
@@ -789,9 +783,9 @@
       .process-card { display: none; }
       .tools-grid { grid-template-columns: 1fr 1fr; }
       .testi-grid { grid-template-columns: 1fr; }
-      .p-grid { grid-template-columns: 1fr 1fr; }
+      .p-grid { grid-template-columns: 1fr; }
       .p-item { grid-column: span 1 !important; }
-      .p-item .p-aspect { padding-top: 70% !important; }
+      .p-item .p-aspect { padding-top: 75% !important; }
       .nav-links, .nav-btn { display: none; }
       .hamburger { display: flex; }
       .services-header { flex-direction: column; align-items: flex-start; }
@@ -800,7 +794,6 @@
     @media (max-width: 580px) {
       .services-grid { grid-template-columns: 1fr; }
       .tools-grid { grid-template-columns: 1fr 1fr; }
-      .p-grid { grid-template-columns: 1fr; }
       .testi-grid { grid-template-columns: 1fr; }
     }
   </style>
@@ -897,8 +890,9 @@
         <div class="hero-visual">
           <div class="hero-img-main">
             <img
-              src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/max_808/80ad52244781109.Y3JvcCwxMDgwLDg0NCwwLDI1MQ.png&w=800&output=webp"
-              alt="Identidad Visual Botánico — Portfolio Valentina Rial"
+              src="./assets/portfolio/botanico.webp"
+              alt="Botánico — Identidad Visual por Valentina Rial"
+              loading="eager"
             />
           </div>
           <div class="hero-badge">
@@ -1017,87 +1011,35 @@
 
       <div class="p-grid">
 
+        <!-- Botánico: ocupa más ancho, es la más fuerte -->
         <a class="p-item reveal" href="https://www.behance.net/gallery/244781109/Botanico-Identidad-visual" target="_blank" rel="noopener" aria-label="Botánico - Identidad visual en Behance">
           <div class="p-aspect"></div>
-          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/max_808/80ad52244781109.Y3JvcCwxMDgwLDg0NCwwLDI1MQ.png&w=600&output=webp" alt="Botánico Identidad Visual" loading="lazy"/>
+          <img class="p-thumb" src="./assets/portfolio/botanico.webp" alt="Botánico Identidad Visual" loading="lazy"/>
           <div class="p-overlay"><div class="p-title">Botánico — Identidad Visual</div><div class="p-cat">Branding · Logo</div></div>
           <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
         </a>
 
-        <a class="p-item reveal" href="https://www.behance.net/gallery/246293129/Anuncio-Redes-Web" target="_blank" rel="noopener" aria-label="Anuncio Redes Web en Behance">
-          <div class="p-aspect"></div>
-          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/27a1a5246293129.Y3JvcCw5OTksNzgyLDAsMTA4.png&w=600&output=webp" alt="Anuncio Redes Web" loading="lazy"/>
-          <div class="p-overlay"><div class="p-title">Anuncio · Redes · Web</div><div class="p-cat">Marketing · Ads</div></div>
-          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
-        </a>
-
-        <a class="p-item reveal" href="https://www.behance.net/gallery/244853921/Diario-Edicion-Universidad" target="_blank" rel="noopener" aria-label="Diario Edición Universidad en Behance">
-          <div class="p-aspect"></div>
-          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/0d4a74244853921.Y3JvcCwzODM1LDMwMDAsMzMyLDA.png&w=500&output=webp" alt="Diario Edición Universidad" loading="lazy"/>
-          <div class="p-overlay"><div class="p-title">Diario — Edición Universidad</div><div class="p-cat">Editorial</div></div>
-          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
-        </a>
-
+        <!-- CHESCA: vertical, mismo peso -->
         <a class="p-item reveal" href="https://www.behance.net/gallery/244792863/CHESCA-nails-Re-diseno-de-logo" target="_blank" rel="noopener" aria-label="CHESCA nails en Behance">
           <div class="p-aspect"></div>
-          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/cc7ca8244792863.Y3JvcCwxMDIyLDgwMCwxODcsMA.png&w=500&output=webp" alt="CHESCA nails" loading="lazy"/>
+          <img class="p-thumb" src="./assets/portfolio/chesca.webp" alt="CHESCA Nails Rediseño de Logo" loading="lazy" style="object-position: center top;"/>
           <div class="p-overlay"><div class="p-title">CHESCA Nails — Rediseño de Logo</div><div class="p-cat">Logo · Branding</div></div>
           <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
         </a>
 
-        <a class="p-item reveal" href="https://www.behance.net/gallery/244589161/Creacion-de-contenido" target="_blank" rel="noopener" aria-label="Creación de contenido en Behance">
+        <!-- Smart Assistant: horizontal -->
+        <a class="p-item reveal" href="https://www.behance.net/gallery/226445167/Identidad-Visual" target="_blank" rel="noopener" aria-label="Smart Assistant Identidad Visual en Behance">
           <div class="p-aspect"></div>
-          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/c5b1da244589161.Y3JvcCwyNDAxLDE4NzgsMCwyNjE.png&w=500&output=webp" alt="Creación de contenido" loading="lazy"/>
-          <div class="p-overlay"><div class="p-title">Creación de Contenido</div><div class="p-cat">Social Media</div></div>
+          <img class="p-thumb" src="./assets/portfolio/smart-assistant.webp" alt="Smart Assistant Logo" loading="lazy" style="object-fit: contain; background: #FDF5EC;"/>
+          <div class="p-overlay"><div class="p-title">Smart Assistant — Logo & Marca</div><div class="p-cat">Logo · Identidad Visual</div></div>
           <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
         </a>
 
-        <a class="p-item reveal" href="https://www.behance.net/gallery/233814837/Identidad-visual" target="_blank" rel="noopener" aria-label="Identidad visual en Behance">
+        <!-- Pulsetrack Brandbook: horizontal, ocupa más -->
+        <a class="p-item reveal" href="https://www.behance.net/gallery/234219097/Manual-de-marca" target="_blank" rel="noopener" aria-label="Pulsetrack Brandbook en Behance">
           <div class="p-aspect"></div>
-          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/32b903233814837.Y3JvcCw0MzIwLDMzNzksMCwxMDA1.png&w=600&output=webp" alt="Identidad Visual" loading="lazy"/>
-          <div class="p-overlay"><div class="p-title">Identidad Visual</div><div class="p-cat">Branding Completo</div></div>
-          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
-        </a>
-
-        <a class="p-item reveal" href="https://www.behance.net/gallery/234219097/Manual-de-marca" target="_blank" rel="noopener" aria-label="Manual de marca en Behance">
-          <div class="p-aspect"></div>
-          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/bea07e234219097.Y3JvcCw1NTIzLDQzMjAsMTA4MCww.png&w=500&output=webp" alt="Manual de marca" loading="lazy"/>
-          <div class="p-overlay"><div class="p-title">Manual de Marca</div><div class="p-cat">Brand Guidelines</div></div>
-          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
-        </a>
-
-        <a class="p-item reveal" href="https://www.behance.net/gallery/226762295/Visual-Identity-Dulce-Estacion" target="_blank" rel="noopener" aria-label="Dulce Estación en Behance">
-          <div class="p-aspect"></div>
-          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/a23e84226762295.Y3JvcCwzMTE5LDI0NDAsMjYyLDA.png&w=500&output=webp" alt="Dulce Estación" loading="lazy"/>
-          <div class="p-overlay"><div class="p-title">Dulce Estación — Identidad Visual</div><div class="p-cat">Branding · Logo</div></div>
-          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
-        </a>
-
-        <a class="p-item reveal" href="https://www.behance.net/gallery/246031431/Newsletter-Beauty-Industry" target="_blank" rel="noopener" aria-label="Newsletter Beauty Industry en Behance">
-          <div class="p-aspect"></div>
-          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/6c97f6246031431.Y3JvcCw5OTksNzgyLDAsMTA4.png&w=500&output=webp" alt="Newsletter Beauty" loading="lazy"/>
-          <div class="p-overlay"><div class="p-title">Newsletter — Beauty Industry</div><div class="p-cat">Editorial · Email</div></div>
-          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
-        </a>
-
-        <a class="p-item reveal" href="https://www.behance.net/gallery/227029247/Social-Media-Ad-Design" target="_blank" rel="noopener" aria-label="Social Media Ad Design en Behance">
-          <div class="p-aspect"></div>
-          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/9b1f42227029247.Y3JvcCwxMzQyLDEwNTAsMjksMA.png&w=500&output=webp" alt="Social Media Ad" loading="lazy"/>
-          <div class="p-overlay"><div class="p-title">Social Media Ad Design</div><div class="p-cat">Ads · Redes</div></div>
-          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
-        </a>
-
-        <a class="p-item reveal" href="https://www.behance.net/gallery/226445167/Identidad-Visual" target="_blank" rel="noopener" aria-label="Identidad Visual en Behance">
-          <div class="p-aspect"></div>
-          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/1d9e17226445167.Y3JvcCwxNDM4LDExMjUsMzIsMA.png&w=500&output=webp" alt="Identidad Visual" loading="lazy"/>
-          <div class="p-overlay"><div class="p-title">Identidad Visual</div><div class="p-cat">Branding</div></div>
-          <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
-        </a>
-
-        <a class="p-item reveal" href="https://www.behance.net/gallery/225951353/Infografia" target="_blank" rel="noopener" aria-label="Infografía en Behance">
-          <div class="p-aspect"></div>
-          <img class="p-thumb" src="https://images.weserv.nl/?url=mir-s3-cdn-cf.behance.net/projects/404/4fb16e225951353.Y3JvcCwzOTEyLDMwNjAsODcsMA.png&w=500&output=webp" alt="Infografía" loading="lazy"/>
-          <div class="p-overlay"><div class="p-title">Infografía</div><div class="p-cat">Diseño Editorial</div></div>
+          <img class="p-thumb" src="./assets/portfolio/pulsetrack-brandbook.webp" alt="Pulsetrack Brandbook" loading="lazy"/>
+          <div class="p-overlay"><div class="p-title">Pulsetrack — Brandbook 2025</div><div class="p-cat">Manual de Marca · Editorial</div></div>
           <div class="p-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
         </a>
 
