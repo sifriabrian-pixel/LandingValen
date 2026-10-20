@@ -34,6 +34,8 @@
       color: var(--black);
       overflow-x: hidden;
       cursor: none;
+      /* Evita que iOS/Android conviertan símbolos (✳) en emojis de color */
+      font-variant-emoji: text;
     }
     img { display: block; max-width: 100%; }
     a { color: inherit; text-decoration: none; }
@@ -695,11 +697,6 @@
         linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
       background-size: 80px 80px;
     }
-    .cta-ast {
-      position: absolute; right: 6%; top: 50%; transform: translateY(-50%);
-      font-size: 200px; color: rgba(216,243,130,.06); line-height: 1;
-      animation: spin 20s linear infinite;
-    }
     .cta-pill-deco {
       position: absolute; left: 4%; bottom: 15%;
       background: rgba(130,109,238,.12); border: 1px solid rgba(130,109,238,.25);
@@ -805,10 +802,11 @@
   <div class="cursor-ring" id="cursorRing"></div>
 
   <!-- Shapes de fondo -->
+  <!-- Nota: &#x2733;&#xFE0E; = asterisco forzado como texto (no emoji en iOS) -->
   <div class="bg-shapes" aria-hidden="true">
     <div class="shape shape-circle-1"></div>
     <div class="shape shape-circle-2"></div>
-    <div class="shape shape-star-big">✳</div>
+    <div class="shape shape-star-big">&#x2733;&#xFE0E;</div>
   </div>
 
   <!-- Mobile menu -->
@@ -854,7 +852,7 @@
         <div>
           <div class="hero-eyebrow">
             <span class="eyebrow-line"></span>
-            <span class="eyebrow-text">Diseñadora Gráfica Freelance · Rosario <span class="ast">✳</span></span>
+            <span class="eyebrow-text">Diseñadora Gráfica Freelance · Rosario <span class="ast">&#x2733;&#xFE0E;</span></span>
           </div>
 
           <h1 class="hero-title">
@@ -900,7 +898,7 @@
             años de experiencia
           </div>
           <div class="hero-floating-pill">✦ Disponible para proyectos</div>
-          <div class="hero-ast-deco" aria-hidden="true">✳</div>
+          <div class="hero-ast-deco" aria-hidden="true">&#x2733;&#xFE0E;</div>
         </div>
 
       </div>
@@ -933,7 +931,7 @@
       <div class="services-header reveal">
         <div>
           <div class="section-kicker"><span class="kicker-line"></span><span class="kicker-text">Lo que hago</span></div>
-          <h2 class="section-title">Servicios de<br/><em>diseño</em> ✳</h2>
+          <h2 class="section-title">Servicios de<br/><em>diseño</em> &#x2733;&#xFE0E;</h2>
         </div>
         <p class="services-sub">Cada servicio pensado para que tu marca tenga presencia real, coherente y con carácter propio.</p>
       </div>
@@ -1094,7 +1092,7 @@
         </div>
 
         <div class="process-card reveal">
-          <div class="pc-deco-ast" aria-hidden="true">✳</div>
+          <div class="pc-deco-ast" aria-hidden="true">&#x2733;&#xFE0E;</div>
           <p class="pc-kicker">✦ Para vos que querés diferenciarte</p>
           <p class="pc-quote">
             "El diseño no es decoración.<br/>
@@ -1121,7 +1119,7 @@
       <div class="services-header reveal">
         <div>
           <div class="section-kicker"><span class="kicker-line"></span><span class="kicker-text">Con qué trabajo</span></div>
-          <h2 class="section-title">Herramientas ✳</h2>
+          <h2 class="section-title">Herramientas &#x2733;&#xFE0E;</h2>
         </div>
         <p class="services-sub" style="color:rgba(255,255,255,.4);">Las mismas que usan las mejores agencias del mundo. Dominio completo de cada una.</p>
       </div>
@@ -1256,11 +1254,10 @@
   <!-- ── CTA FINAL ── -->
   <section class="cta-section" id="contacto">
     <div class="cta-grid-deco"></div>
-    <div class="cta-ast" aria-hidden="true">✳</div>
     <div class="cta-pill-deco">✦ Disponible para proyectos</div>
     <div class="container">
       <div class="cta-inner reveal">
-        <span class="cta-kicker">✳ ¿Arrancamos?</span>
+        <span class="cta-kicker">&#x2733;&#xFE0E; ¿Arrancamos?</span>
         <h2 class="cta-title">
           Tu marca merece<br/>
           <em>un diseño a su altura</em>
@@ -1288,7 +1285,7 @@
   <footer>
     <div class="container">
       <div class="footer-inner">
-        <div class="footer-logo">Valentina Rial ✳</div>
+        <div class="footer-logo">Valentina Rial &#x2733;&#xFE0E;</div>
         <ul class="footer-links">
           <li><a href="#servicios">Servicios</a></li>
           <li><a href="#portfolio">Portfolio</a></li>
